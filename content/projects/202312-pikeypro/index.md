@@ -1,0 +1,40 @@
+---
+title: "PiKeyPro - A Custom Keyboard"
+categories: ["Open-Source"]
+tags: ["hardware", "raspberry-pi"]
+date: 2023-12-01
+draft: false
+showauthor: false
+authors:
+  - br34dcrumb
+---
+## Init
+This is a keyboard that I made functional with Raspberry Pi Pico.
+
+## Main
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis ut leo pellentesque, rutrum metus vel, molestie urna. Suspendisse vel turpis sed sapien porttitor pharetra ut at ipsum. Cras aliquam rutrum dignissim. Fusce mollis egestas vulputate. Etiam et erat mi. Nam at metus nulla. Suspendisse vel placerat lorem. Aliquam lacinia hendrerit eleifend. Nulla id ante est. Phasellus sagittis maximus magna eget facilisis. In non gravida tellus.
+
+### Sub main
+Nulla varius nunc nec pellentesque ultricies. Nulla vitae venenatis lectus. Curabitur nec enim nunc. Vivamus ultrices mollis metus, sodales congue nisl venenatis sit amet. Sed nec nisi eget augue vulputate tristique at eget quam. Phasellus accumsan elementum ipsum, eget dapibus ipsum tempor tempus. Suspendisse lectus ante, pulvinar mattis rutrum id, molestie ac risus. Aliquam feugiat urna ac ex ullamcorper, sit amet hendrerit urna commodo. Sed sed congue quam, et egestas erat. Pellentesque tincidunt sapien ut ullamcorper accumsan. Etiam semper augue id purus convallis, sed porta magna fringilla. Maecenas sodales sit amet libero et egestas. Nulla tincidunt eu ipsum et tristique. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.
+
+### Sub main
+Nulla vel augue ullamcorper, iaculis erat quis, maximus felis. Cras finibus orci eget vehicula fringilla. Fusce nec aliquet purus. Proin convallis risus massa, in consectetur dui porta eget. Suspendisse lectus velit, elementum ac dolor in, elementum lobortis mi. Nunc pretium rutrum massa, in eleifend nibh fringilla sit amet. Fusce nibh odio, dictum nec mattis in, porttitor vitae mi. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Curabitur ac suscipit libero, a consectetur urna. Proin tempor, neque vitae condimentum cursus, lacus dolor accumsan lorem, et posuere diam urna quis magna. Duis tempus a est finibus tristique. Aenean eu eros luctus, accumsan urna a, aliquet odio. Curabitur dictum dui eget pellentesque malesuada.
+
+```text
+Cras quis hendrerit erat. Etiam non mauris pretium, ultricies massa id, lobortis ligula.
+Aliquam erat volutpat. Nulla facilisis vulputate sem, ut hendrerit magna elementum eu.
+Phasellus mattis finibus ligula, sed venenatis turpis dapibus quis. Quisque vitae erat urna. Nunc auctor, massa ut dignissim venenatis, purus velit pretium tortor, eget suscipit odio dui sed mi. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Fusce eget dui nec quam placerat bibendum.
+Aliquam a nulla posuere, rhoncus ex quis, bibendum nunc. Nunc molestie malesuada leo, dignissim tincidunt urna posuere non. Nunc vel fringilla ipsum. Aliquam erat volutpat. Pellentesque aliquet lectus non sem accumsan, quis luctus lorem porta. Nulla quis est venenatis, volutpat ex et, tincidunt tellus.
+```
+
+> Aliquam nulla est, malesuada in dolor ac, maximus tincidunt nulla. Donec sed tristique nibh. Vivamus mattis enim nec magna faucibus, vel dapibus dui convallis. In massa arcu, semper ut placerat et, egestas ut neque. Suspendisse quis dolor enim. Curabitur vel faucibus urna. Mauris nec molestie justo, eget semper metus. Pellentesque a risus enim. Suspendisse condimentum, nunc eget interdum porta, est arcu luctus mi, vel placerat eros orci et elit. Nunc porttitor dictum euismod. Praesent vel nulla ac magna rutrum sollicitudin.
+
+Vivamus tempus turpis eget justo sodales, id pretium nisi malesuada. Nunc sed eros ac justo viverra pellentesque at semper justo. Cras et scelerisque est, sit amet lacinia nulla. Aenean est purus, porta at cursus a, tincidunt nec diam. Suspendisse potenti. Nulla sit amet malesuada nisl, vitae ultrices elit. Integer euismod id elit et elementum. Donec gravida placerat feugiat. Suspendisse tempor tortor est, at lobortis erat aliquam at. Aenean dictum velit risus, in malesuada orci placerat eget. Nunc eleifend at augue tincidunt consectetur. Fusce vitae orci nisi. Donec dapibus varius finibus. Morbi faucibus maximus ligula, quis varius elit dapibus ut. Sed mattis mattis elit posuere pellentesque.
+
+Morbi vehicula ullamcorper blandit. Mauris pulvinar sodales mauris eu gravida. Nam auctor urna at mattis luctus. Aenean vitae suscipit sem. Morbi ornare velit eu placerat egestas. Etiam eu sagittis nibh. Pellentesque at nisi consectetur neque dapibus vehicula a vel nunc. Ut sodales auctor odio, a aliquam nisi pulvinar at. Proin dictum fermentum dui. Nam justo velit, molestie nec ante vel, posuere viverra lorem. Sed nec sapien gravida, egestas nisi sit amet, vulputate nunc.
+
+Aenean ac consectetur nunc. Nulla facilisi. Sed convallis nibh ut aliquet ornare. Pellentesque semper, diam eget rhoncus eleifend, felis ante lobortis sem, sit amet vehicula lorem est eu dui. Phasellus maximus orci id velit gravida finibus. Duis pretium dui ac augue suscipit, a sollicitudin ligula iaculis. Donec sit amet pretium velit. Vestibulum dapibus dolor eget commodo iaculis. Pellentesque eget tortor at lacus luctus ultrices. Praesent elit lectus, consequat ut dolor vitae, viverra posuere arcu. Integer lobortis, neque sit amet placerat imperdiet, urna purus consequat arcu, non cursus nisl est quis sapien.
+
+Vestibulum molestie metus id nulla vestibulum, in vestibulum felis egestas. Morbi accumsan suscipit aliquam. Mauris imperdiet efficitur ipsum a molestie. Maecenas arcu est, porta eget scelerisque nec, dictum sit amet orci. Ut eleifend mauris metus, id elementum felis pretium eget. Mauris venenatis dui consequat neque rutrum molestie. Curabitur maximus vehicula dui, ac cursus ipsum consectetur et. Sed tempor orci id efficitur iaculis. Sed tempus, arcu ac dapibus fringilla, sapien metus pulvinar risus, vel sodales eros metus ut erat. Nunc non urna scelerisque, gravida ipsum nec, fringilla ante. Etiam interdum congue lectus nec porttitor. Cras faucibus purus non posuere ultrices. Phasellus finibus eleifend purus sit amet tincidunt. Aliquam ante quam, ullamcorper et mollis id, maximus et neque. Vivamus efficitur diam non ipsum consequat mollis. Aenean sagittis scelerisque dui, id sollicitudin enim pretium a.
+
+Vivamus sagittis sit amet erat non ultricies. Etiam ac ipsum ligula. Cras non dapibus elit. Duis eu massa consectetur, lacinia mi eu, euismod dolor. Ut lacinia nibh sed nisl tincidunt pellentesque. Morbi efficitur risus vitae velit condimentum mattis. Suspendisse mattis, magna id pharetra vestibulum, dolor neque vestibulum diam, non feugiat est dolor quis velit. In scelerisque felis ipsum, eget faucibus ex feugiat quis. Aliquam in quam lorem. Pellentesque quam elit, varius id aliquet non, porta eget lacus. Aenean porta quis augue eu semper. Ut est lorem, porta quis consequat fermentum, elementum vestibulum magna. Aliquam viverra dui et arcu viverra, id feugiat mi pulvinar. Donec condimentum eros quis turpis dignissim, at dapibus mauris commodo. Duis volutpat finibus orci, laoreet vehicula leo maximus at.

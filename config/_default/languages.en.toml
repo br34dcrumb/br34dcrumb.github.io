@@ -1,0 +1,22 @@
+languageCode = "en"
+languageName = "English"
+weight = 1
+title = "br34dcrumb"
+
+[params]
+displayName = "EN"
+isoCode = "en"
+rtl = false
+dateFormat = "2 January 2006"
+description = "My Personal Website"
+
+[author]
+name = "Anikait Panigrahi"
+links = [
+    { email = "mailto:br34dcrumb@proton.me" },
+    { github = "https://github.com/br34dcrumb" },
+    { linkedin = "https://www.linkedin.com/in/anikaitpanigrahi/" },
+    { twitter = "https://twitter.com/Anikait05" },
+]
+bio = ""
+headline = "Reverse Engineer | Cyber Security Enthusiast"
