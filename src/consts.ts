@@ -1,7 +1,7 @@
 import type { IconMap, SocialLink, Site } from '@/types'
 
 export const SITE: Site = {
-  title: 'br34d\'s Blog 🍞',
+  title: 'br34d',
   description:
     'Electronics tinkerer and a hardware security enthusiast from India.',
   href: 'https://br34dcrumb.github.io',
@@ -85,3 +85,4 @@ export const STUDIES = [
   }
 
 ]
+
