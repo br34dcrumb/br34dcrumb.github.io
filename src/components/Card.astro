@@ -1,0 +1,40 @@
+---
+import ContentCard from './ContentCard.astro'
+import { Card as ShadcnCard } from './ui/card'
+import { ArrowUpRight } from 'lucide-react'
+
+interface Props {
+  title?: string
+  body?: string
+  colSpan?: string
+  rowSpan?: string
+  href?: string
+  colorText?: string
+}
+
+const { title, body, colSpan, rowSpan, href, colorText } = Astro.props
+---
+
+<ShadcnCard
+  className={`card-animate transform-y-[-40%] hover:border-primary align-start perspective-1200 group group relative col-span-1 h-auto w-full flex-none transform justify-start overflow-hidden p-6 shadow-lg transition duration-75 ease-in-out ${
+    colSpan || 'md:col-span-2'
+  } ${rowSpan || ''} ${href ? 'cursor-pointer italic hover:text-primary' : ''}`}
+>
+  {
+    href ? (
+      <a href={href} class={`block h-full w-full ${colorText || ' '}`}>
+        <ArrowUpRight
+          className="group-hover:text-primary group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform ease-in-out duration-100 float-right h-6"
+          size={20}
+        />
+        <ContentCard title={title} body={body}>
+          <slot />
+        </ContentCard>
+      </a>
+    ) : (
+      <ContentCard title={title} body={body}>
+        <slot />
+      </ContentCard>
+    )
+  }
+</ShadcnCard>

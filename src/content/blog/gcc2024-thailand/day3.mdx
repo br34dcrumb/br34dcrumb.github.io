@@ -1,0 +1,45 @@
+---
+title: 'Day 3: Vulnerable LLM web apps and Velociraptor'
+description: 'Representing India at the Global Cybersecurity Camp 2024 in Thailand.'
+date: 2024-03-01
+authors: ['br34d']
+order: 3
+---
+
+<div class="invisible h-0! [&+*]:mt-0 [&+*_*]:mt-0">
+## Day 3: Vulnerable LLM web apps and Velociraptor
+</div>
+
+
+First session of the day was on vulnerable LLM web apps. LLMs are a hot topic right now so I was looking forward to the session. 
+
+---
+
+### How (not) to build a vulnerable LLM web app - Shota Shinogi [JP]
+This session was taken by **Shota Shinogi**, the creator of [ShinoBot](https://github.com/Sh1n0g1/ShinoBOT), a malware simulator. He has also presented talks at major conferences like DEFCON and BlackHat.
+
+He began by showing us just how easy it is to bypass the instructions of an LLM, you can simply tell it to ignore its original prompt and follow yours instead. The entire room was stunned, *“Wait, we can actually do that?”* This live demonstration made us realize how fragile and exploitable these systems can be.
+
+To put this into practice, he had prepared a CTF environment with LLMs running behind simple web apps. Our task was to use prompt injection techniques to get the flags. Some were quite straightforward, while others required a bit more creativity and wording.
+
+After the CTF, sh1n0g1-san gave us something unexpected, his own GPT-4 API key. With it, we could deploy our own LLM web apps and try to exploit them. Danisy an I got the opportunity to present our vulnerable LLM webapp, **NeverGonnaLose**, in front of everyone too. The exercise wasn't just about breaking things, it was also about building secure defenses like learning how to restrict input, sanitize prompts, and set up guardrails.
+
+This session was very fun and different from all the sessions I had attended. For me, it easily makes it into the **Top 3 sessions of GCC**.
+
+![sh1n0g1](./assets/llm-shinogi.jpg)
+![our llm webapp demo](./assets/llm-my-poc.JPG)
+
+---
+
+Next up was a Forensics session on Velociraptor.
+
+---
+
+### Hunting with a Dinosaur - Andreas van Leeuwen Flamino [NL-AE]
+This session engaged us in threat hunting through Windows event logs using a tool called Velociraptor. We worked on a few labs built around a storyline scenario, where we had to trace the point of intrusion across several machines. Although forensics isn't my primary area of interest, it was still a pretty interesting talk, as I got to see and experience a real forensics workflow.
+
+![DSC03581 (1)](./assets/dino-hunt.jpg)
+
+---
+
+I had dinner and then our group met again to discuss the project. By that time I had developed a script that automatically dumps data from Android devices. We started building the plugin/transform and made some solid progress on the project. We left creating the presentation for the last day.

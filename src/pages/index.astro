@@ -1,0 +1,90 @@
+---
+import PageHead from '@/components/PageHead.astro'
+import Layout from '@/layouts/Layout.astro'
+
+import GlobeComponent from '@/components/globe'
+import AboutMe from '../components/bento/AboutMe.astro'
+import GithubCalendar from '../components/bento/GithubCalendar'
+import IntroCard from '../components/bento/IntroCard.astro'
+import Now from '../components/bento/Now.astro'
+import SpotifyPresence from '../components/bento/SpotifyPresence.tsx'
+import TimeZoneCard from '../components/bento/TimeZoneCard.astro'
+import Card from '../components/Card.astro'
+---
+
+<script>
+  import { spring, stagger, timeline, type TimelineDefinition } from 'motion'
+  import { loaderAnimation } from '../lib/utils'
+
+  const cards = document.querySelectorAll('.card-animate')
+
+  const sequence = [
+    loaderAnimation,
+    [
+      cards,
+      { y: ['40%', '0%'], opacity: [0, 1] },
+      {
+        at: '-0.1',
+        duration: 0.4,
+        delay: stagger(0.3),
+        easing: spring({ velocity: 100, stiffness: 50, damping: 10 }),
+      },
+    ],
+  ]
+
+  timeline(sequence as TimelineDefinition)
+</script>
+
+<Layout class="max-w-8xl">
+  <PageHead slot="head" title="Home" />
+  <div
+    slot="loader"
+    class="loader bg-darkslate-700 fixed top-0 right-0 bottom-0 left-0 z-50 flex h-screen w-screen items-center justify-center text-3xl font-black text-neutral-50 uppercase"
+  >
+  </div>
+  <main
+    class="relative m-auto grid w-full max-w-7xl gap-2 overflow-hidden p-2 sm:gap-2 sm:p-4 md:grid-cols-2 md:gap-3 md:p-6 lg:grid-cols-4 lg:grid-rows-8 lg:gap-4"
+  >
+    <IntroCard />
+    <AboutMe />
+    <Card colSpan="md:col-span-1" rowSpan="md:row-span-3">
+      <SpotifyPresence client:load />
+    </Card>
+
+    <Now />
+
+    <Card
+      colSpan="md:col-span-1"
+      rowSpan="md:row-span-1"
+      title="Blog"
+      href="/blog"
+    />
+
+    <Card
+      colSpan="md:col-span-1"
+      rowSpan="md:row-span-1"
+      title="My Projects"
+      href="/projects"
+    />
+    <TimeZoneCard />
+
+    <Card
+      colSpan="md:col-span-1"
+      rowSpan="md:row-span-3"
+      title="Travel Card"
+      href="/travel"
+    >
+      <div class="relative h-full w-full overflow-hidden rounded-lg">
+        <div class="absolute inset-0 -z-10 h-full w-full">
+          <GlobeComponent client:load />
+        </div>
+      </div>
+    </Card>
+
+    <Card colSpan="md:col-span-2" rowSpan="md:row-span-3">
+      <div class="mb-2 flex items-center justify-center">
+        <GithubCalendar username="br34dcrumb" client:load />
+      </div>
+    </Card>
+  </main>
+</Layout>

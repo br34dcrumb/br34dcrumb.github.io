@@ -1,0 +1,55 @@
+---
+import { ICON_MAP, SOCIAL_LINKS } from '@/consts'
+import { Icon } from 'astro-icon/components'
+import Button from '../Button.astro'
+import Card from '../Card.astro'
+import Tooltip from './Tooltip/index'
+---
+
+<Card colSpan="md:col-span-3" rowSpan="md:row-span-4">
+  <div class="flex h-full w-full">
+    <div class="flex flex-col justify-between gap-4 md:max-h-[300px]">
+      <div class="flex h-full flex-col">
+        <h6 class="m-0 text-sm font-light text-gray-500">welcome</h6>
+        <p class="m-0 font-light md:text-lg xl:text-xl">
+          Hi 👋, I'm <b class="font-bold">Anikait Panigrahi</b> — a cybersecurity
+          enthusiast and systems tinkerer with a curious mind. I enjoy unpacking
+          complex ideas and often find myself tangled in chaos. Always
+          up for a good challenge (and a hot cup of <i class="italic">chai</i
+          >).
+        </p>
+      </div>
+      <div class="flex flex-wrap gap-4">
+        {
+          SOCIAL_LINKS.filter((link) =>
+            ['GitHub', 'Twitter', 'LinkedIn', 'Email'].includes(link.label),
+          ).map((link) => (
+            <a
+              href={link.href}
+              aria-label={`${link.label.toLowerCase()} profile`}
+              target="_blank"
+            >
+              <Button aria-label={`${link.label.toLowerCase()} profile`}>
+                <Icon class="h-6" name={ICON_MAP[link.label]} />
+                <span class="sr-only">{link.label} Profile</span>
+              </Button>
+            </a>
+          ))
+        }
+        <Tooltip client:load>
+          <Button inverse={true} aria-label="huh">
+            <Icon class="h-6" name="lucide:biohazard" />
+            <span class="sr-only">new button</span>
+          </Button>
+        </Tooltip>
+      </div>
+    </div>
+    <img
+      width="200"
+      height="200"
+      src="/static/logo.png"
+      class="pointer-events-none absolute right-[-110px] bottom-[-20px] z-[-1] max-h-[300px] w-auto opacity-50 select-none md:relative md:right-auto md:bottom-auto md:z-auto md:opacity-100"
+      alt="itssamee"
+    />
+  </div>
+</Card>

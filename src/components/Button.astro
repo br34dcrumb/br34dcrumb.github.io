@@ -1,0 +1,26 @@
+---
+interface Props {
+  rounded?: boolean;
+  inverse?: boolean;
+}
+
+const { rounded, inverse } = Astro.props;
+---
+
+<button
+  class={`text-xl max-h-[50px]
+    
+    active:shadow-none active:translate-x-[3px] active:translate-y-[3px]
+    px-5 py-2 border
+    transition-colors duration-100 ease-in-out
+    cursor-pointer
+    ${inverse 
+      ? `bg-[#0ea5e9] text-background shadow-[3px_3px_0] shadow-foreground border-foreground hover:text-foreground`
+      : `bg-background text-foreground shadow-[3px_3px_0_#0ea5e9] border-[#0ea5e9] hover:text-primary`
+    }
+    ${rounded ? "rounded-full" : "rounded-lg"}
+  `}
+>
+  <slot />
+</button>
+

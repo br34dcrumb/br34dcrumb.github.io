@@ -1,0 +1,44 @@
+---
+// Remove Pagination imports
+import BlogCard from '@/components/BlogCard.astro'
+import Breadcrumbs from '@/components/Breadcrumbs.astro'
+import PageHead from '@/components/PageHead.astro'
+import Layout from '@/layouts/Layout.astro'
+import { getAllPosts, groupPostsByYear } from '@/lib/data-utils'
+
+// Fetch ALL posts at build time (no paginate!)
+const allPosts = await getAllPosts()
+const postsByYear = groupPostsByYear(allPosts)
+const years = Object.keys(postsByYear).sort((a, b) => parseInt(b) - parseInt(a))
+---
+
+<Layout class="max-w-4xl">
+  <PageHead slot="head" title="Blog" />
+  <Breadcrumbs
+    items={[{ label: 'Blog', href: '/blog', icon: 'lucide:library-big' }]}
+  />
+
+  <div class="flex min-h-[calc(100vh-18rem)] flex-col gap-y-8">
+    {
+      years.map((year) => (
+        <section class="flex flex-col gap-y-4">
+          <hr />
+          <h3
+            class="font-['Atkinson'] pointer-events-none absolute z-10 hidden -translate-x-30 rotate-270 py-12 text-[4rem] leading-none text-transparent select-none sm:block"
+            style="-webkit-text-stroke: 1px var(--muted-foreground);"
+          >
+            {year}
+          </h3>
+          <div class="font-medium sm:hidden">{year}</div>
+          <ul class="flex flex-col gap-4">
+            {postsByYear[year].map((post) => (
+              <li>
+                <BlogCard entry={post} />
+              </li>
+            ))}
+          </ul>
+        </section>
+      ))
+    }
+  </div>
+</Layout>
