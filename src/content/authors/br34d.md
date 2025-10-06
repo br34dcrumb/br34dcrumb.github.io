@@ -7,6 +7,6 @@ website: 'https://br34dcrumb.github.io/'
 twitter: 'https://twitter.com/_br34d_'
 linkedin: 'https://linkedin.com/in/anikaitpanigrahi'
 github: 'https://github.com/br34dcrumb'
-resume: '/Anikait-Resume-web.pdf'
+resume: '/Anikait-Resume-website.pdf'
 mail: 'br34dcrumb@proton.me'
 ---
