@@ -4,7 +4,7 @@ export const SITE: Site = {
   title: 'br34d',
   description:
     'Electronics tinkerer and a hardware security enthusiast from India.',
-  href: 'https://br34dcrumb.github.io',
+  href: 'https://anikait.space',
   author: 'br34dcrumb',
   locale: 'en-US',
   featuredPostCount: 0,
