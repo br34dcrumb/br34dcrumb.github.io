@@ -21,6 +21,7 @@ import tailwindcss from '@tailwindcss/vite'
 
 export default defineConfig({
   site: 'https://anikait.space/',
+  prefetch: true,
   integrations: [
     expressiveCode({
       themes: ['github-dark-default'],
@@ -46,7 +47,7 @@ export default defineConfig({
         frames: {
           editorActiveTabForeground: 'var(--muted-foreground)',
           editorActiveTabBackground:
-          'color-mix(in oklab, var(--secondary) 25%, transparent)',
+            'color-mix(in oklab, var(--secondary) 25%, transparent)',
           editorActiveTabIndicatorBottomColor: 'transparent',
           editorActiveTabIndicatorTopColor: 'transparent',
           editorTabBorderRadius: '0',
@@ -54,7 +55,7 @@ export default defineConfig({
           editorTabBarBorderBottomColor: 'transparent',
           frameBoxShadowCssValue: 'none',
           terminalBackground:
-          'color-mix(in oklab, var(--secondary) 25%, transparent)',
+            'color-mix(in oklab, var(--secondary) 25%, transparent)',
           terminalTitlebarBackground: 'transparent',
           terminalTitlebarBorderBottomColor: 'transparent',
           terminalTitlebarForeground: 'var(--muted-foreground)',
@@ -71,6 +72,9 @@ export default defineConfig({
     icon(),
   ],
   vite: {
+    build: {
+      sourcemap: true,
+    },
     // @ts-expect-error - Tailwind Vite plugin types not compatible with Astro
     plugins: [tailwindcss()],
   },

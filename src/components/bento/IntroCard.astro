@@ -3,6 +3,8 @@ import { ICON_MAP, SOCIAL_LINKS } from '@/consts'
 import { Icon } from 'astro-icon/components'
 import Button from '../Button.astro'
 import Card from '../Card.astro'
+import { Image } from 'astro:assets'
+import logoImage from '@/assets/logo.png'
 import Tooltip from './Tooltip/index'
 ---
 
@@ -44,10 +46,10 @@ import Tooltip from './Tooltip/index'
         </Tooltip>
       </div>
     </div>
-    <img
+    <Image
       width="200"
       height="200"
-      src="/static/logo.png"
+      src={logoImage}
       class="pointer-events-none absolute right-[-110px] bottom-[-20px] z-[-1] max-h-[300px] w-auto opacity-50 select-none md:relative md:right-auto md:bottom-auto md:z-auto md:opacity-100"
       alt="itssamee"
     />

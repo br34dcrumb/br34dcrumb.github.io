@@ -30,12 +30,12 @@
     "astro-icon": "^1.1.5",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
+    "cobe": "^0.6.5",
     "d3": "^7.9.0",
     "framer-motion": "^12.23.6",
     "gsap": "^3.13.0",
     "lucide-react": "^0.469.0",
     "material-design-icons-iconfont": "^6.7.0",
-    "mdi": "^2.2.43",
     "moment-timezone": "^0.6.0",
     "motion": "^10.17.0",
     "patch-package": "^8.0.0",
@@ -57,10 +57,12 @@
   },
   "devDependencies": {
     "@types/d3": "^7.4.3",
+    "@types/three": "^0.182.0",
     "prettier": "^3.5.1",
     "prettier-plugin-astro": "^0.14.1",
     "prettier-plugin-astro-organize-imports": "^0.4.11",
-    "prettier-plugin-tailwindcss": "^0.6.11"
+    "prettier-plugin-tailwindcss": "^0.6.11",
+    "three": "^0.182.0"
   },
   "prettier": {
     "semi": false,
