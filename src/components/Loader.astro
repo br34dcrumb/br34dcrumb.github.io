@@ -1,0 +1,50 @@
+---
+import { cn } from '@/lib/utils'
+---
+
+<div
+  class="loader fixed top-0 right-0 bottom-0 left-0 z-50 flex h-screen w-screen items-center justify-center bg-zinc-900 text-neutral-50"
+>
+  <div class="relative flex flex-col items-center gap-4">
+    <!-- Animated Text/Logo -->
+    <h1 class="font-black text-4xl sm:text-6xl tracking-tighter uppercase relative overflow-hidden">
+      <span class="inline-block animate-slide-up">Anikait Panigrahi</span>
+    </h1>
+    
+    <!-- Optional: Subtle loading bar or spinner -->
+    <div class="w-48 h-1 bg-zinc-800 rounded-full overflow-hidden mt-2">
+      <div class="h-full bg-neutral-50 animate-progress origin-left"></div>
+    </div>
+  </div>
+</div>
+
+<style>
+  /* Base keyframes if not using Tailwind config for these specific animations */
+  @keyframes slide-up {
+    0% {
+      transform: translateY(100%);
+      opacity: 0;
+    }
+    100% {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+
+  @keyframes progress {
+    0% {
+      transform: scaleX(0);
+    }
+    100% {
+      transform: scaleX(1);
+    }
+  }
+
+  .animate-slide-up {
+    animation: slide-up 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+
+  .animate-progress {
+    animation: progress 1.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+</style>

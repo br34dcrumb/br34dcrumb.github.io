@@ -52,6 +52,6 @@ export function getElapsedTime(unixTimestamp: number): string {
 
 export const loaderAnimation = [
   '.loader',
-  { opacity: [1, 0], pointerEvents: 'none' },
-  { easing: 'ease-out' },
+  { opacity: [1, 0] },
+  { duration: 1.2, easing: 'ease-out' },
 ]
