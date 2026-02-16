@@ -20,7 +20,7 @@ import { pluginLineNumbers } from '@expressive-code/plugin-line-numbers'
 import tailwindcss from '@tailwindcss/vite'
 
 export default defineConfig({
-  site: 'https://anikait.space/',
+  site: 'https://br34dcrumb.github.io/',
   prefetch: true,
   integrations: [
     expressiveCode({
@@ -113,3 +113,4 @@ export default defineConfig({
     remarkPlugins: [remarkMath, remarkEmoji],
   },
 })
+
