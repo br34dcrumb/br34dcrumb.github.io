@@ -1,0 +1,37 @@
+---
+interface Props {
+  label: string
+  title: string
+  description?: string
+  count?: number
+}
+
+const { label, title, description, count } = Astro.props
+---
+
+<header class="flex flex-col gap-6 pt-6 pb-4">
+  <p class="section-label" data-reveal>{label}</p>
+  <div class="flex flex-wrap items-end justify-between gap-x-8 gap-y-4">
+    <h1
+      class="glitch text-[clamp(3rem,12vw,9rem)] leading-[0.85] font-extrabold tracking-[-0.06em] uppercase"
+      data-text={title}
+    >
+      <span data-scramble>{title}</span>
+    </h1>
+    {
+      count !== undefined && (
+        <span class="text-muted-foreground pb-3 text-sm tabular-nums" data-reveal>
+          [{String(count).padStart(2, '0')} entries]
+        </span>
+      )
+    }
+  </div>
+  {
+    description && (
+      <p class="text-muted-foreground max-w-xl text-sm leading-relaxed sm:text-base" data-reveal style="--i:1">
+        {description}
+      </p>
+    )
+  }
+  <slot />
+</header>

@@ -1,96 +1,226 @@
 ---
+import GithubCalendar from '@/components/home/GithubCalendar'
+import Hero from '@/components/home/Hero'
+import Terminal from '@/components/home/Terminal'
 import PageHead from '@/components/PageHead.astro'
+import PostRow from '@/components/PostRow.astro'
+import ProjectTile from '@/components/ProjectTile.astro'
+import { visitedCountries } from '@/consts'
 import Layout from '@/layouts/Layout.astro'
-import Loader from '@/components/Loader.astro'
+import { getAllPosts, getAllProjects } from '@/lib/data-utils'
 
+const posts = await getAllPosts()
+const projects = await getAllProjects()
 
-import AboutMe from '../components/bento/AboutMe.astro'
-import GithubCalendar from '../components/bento/GithubCalendar'
-import IntroCard from '../components/bento/IntroCard.astro'
-import Now from '../components/bento/Now.astro'
-import SpotifyPresence from '../components/bento/SpotifyPresence.tsx'
-import TimeZoneCard from '../components/bento/TimeZoneCard.astro'
-import Card from '../components/Card.astro'
-import { Image } from 'astro:assets'
-import mapImage from '@/assets/map.png'
+const termPosts = posts.map((p) => ({
+  title: p.data.title,
+  href: `/blog/${p.id}`,
+  meta: p.data.date.toISOString().slice(0, 10),
+}))
+const termProjects = projects.map((p) => ({
+  title: p.data.name,
+  href: p.data.link,
+}))
+
+const MARQUEE = [
+  'reverse engineering',
+  'fault injection',
+  'side-channel analysis',
+  'firmware',
+  'risc-v',
+  'verilog',
+  'ctf',
+  'hardware hacking',
+  'protocol fuzzing',
+]
+
+const INTERESTS = [
+  ['reverse engineering', 'binaries, firmware, the occasional cursed blob'],
+  ['SCA & fault injection', 'power traces, voltage glitches, clock games'],
+  ['RISC core design', 'writing CPUs in verilog, then breaking them'],
+  ['CTFs', 'hardware & rev challenges with team bi0s'],
+]
+
+const stats = [
+  [String(posts.length).padStart(2, '0'), 'writeups'],
+  [String(projects.length).padStart(2, '0'), 'projects'],
+  [String(visitedCountries.length).padStart(2, '0'), 'countries'],
+  ['∞', 'cups of chai'],
+]
 ---
 
-<script>
-  import { spring, stagger, timeline, type TimelineDefinition } from 'motion'
-  import { loaderAnimation } from '../lib/utils'
-
-  document.addEventListener('astro:page-load', () => {
-    const cards = document.querySelectorAll('.card-animate')
-
-    const sequence = [
-      loaderAnimation,
-      [
-        cards,
-        { y: ['40%', '0%'], opacity: [0, 1] },
-        {
-          at: '-0.1',
-          duration: 0.4,
-          delay: stagger(0.3),
-          easing: spring({ velocity: 100, stiffness: 50, damping: 10 }),
-        },
-      ],
-    ]
-
-    timeline(sequence as TimelineDefinition).finished.then(() => {
-      document.querySelector('.loader')?.remove()
-    })
-  })
-</script>
-
-<Layout class="max-w-8xl">
+<Layout fullBleed>
   <PageHead slot="head" title="Home" />
-  <Loader slot="loader" />
-  <main
-    class="relative m-auto grid w-full max-w-7xl gap-2 overflow-hidden p-2 sm:gap-2 sm:p-4 md:grid-cols-2 md:gap-3 md:p-6 lg:grid-cols-4 lg:grid-rows-8 lg:gap-4"
+
+  <Hero client:load />
+
+  <!-- marquee -->
+  <div
+    class="border-border bg-phosphor text-primary-foreground relative -rotate-1 overflow-hidden border-y py-3 text-sm font-bold tracking-wider uppercase select-none sm:text-base"
+    aria-hidden="true"
   >
-    <IntroCard />
-    <AboutMe />
-    <Card colSpan="md:col-span-1" rowSpan="md:row-span-3">
-      <SpotifyPresence client:load />
-    </Card>
+    <div class="animate-marquee flex w-max gap-8 whitespace-nowrap">
+      {
+        [...MARQUEE, ...MARQUEE].map((m) => (
+          <span class="flex items-center gap-8">
+            {m}
+            <span>✦</span>
+          </span>
+        ))
+      }
+    </div>
+  </div>
 
-    <Now />
-
-    <Card
-      colSpan="md:col-span-1"
-      rowSpan="md:row-span-1"
-      title="Blog"
-      href="/blog"
-    />
-
-    <Card
-      colSpan="md:col-span-1"
-      rowSpan="md:row-span-1"
-      title="My Projects"
-      href="/projects"
-    />
-    <TimeZoneCard />
-
-    <Card
-      colSpan="md:col-span-1"
-      rowSpan="md:row-span-3"
-      title="Travel Card"
-      href="/travel"
-      colorText="text-neutral-100"
-    >
-      <div class="h-full w-full">
-        <Image
-          src={mapImage}
-          alt="World Map"
-          class="pointer-events-none absolute top-0 left-1/2 h-full w-auto min-w-full max-w-none -translate-x-1/2 object-cover opacity-50"
-        />
+  <!-- 01 shell -->
+  <section id="terminal" class="mx-auto max-w-7xl scroll-mt-24 px-5 pt-28 sm:px-8">
+    <p class="section-label mb-8" data-reveal>01 — shell</p>
+    <div class="grid gap-12 lg:grid-cols-[1.35fr_1fr] lg:gap-16">
+      <div>
+        <h2
+          class="mb-8 text-[clamp(2.2rem,5vw,4rem)] leading-[0.95] font-extrabold tracking-[-0.05em]"
+          data-reveal
+        >
+          don't scroll.<br /><span class="text-phosphor">poke around.</span>
+        </h2>
+        <Terminal client:visible posts={termPosts} projects={termProjects} />
       </div>
-    </Card>
 
-    <Card colSpan="md:col-span-2" rowSpan="md:row-span-3">
-      <div class="mb-2 flex items-center justify-center">
-        <GithubCalendar username="br34dcrumb" client:load />
+      <div class="flex flex-col gap-10 lg:pt-28">
+        <div data-reveal>
+          <p class="text-muted-foreground mb-4 text-xs tracking-[0.2em] uppercase">
+            /proc/interests
+          </p>
+          <ul class="divide-border border-border divide-y border-y">
+            {
+              INTERESTS.map(([k, v], i) => (
+                <li class="group flex gap-4 py-4">
+                  <span class="text-border group-hover:text-phosphor text-xs tabular-nums transition-colors">
+                    0x{i.toString(16).padStart(2, '0')}
+                  </span>
+                  <div>
+                    <p class="font-semibold">{k}</p>
+                    <p class="text-muted-foreground text-sm">{v}</p>
+                  </div>
+                </li>
+              ))
+            }
+          </ul>
+        </div>
+
+        <div data-reveal class="border-border relative border p-5">
+          <span class="bg-background text-muted-foreground absolute -top-2.5 left-4 px-2 text-xs tracking-[0.2em] uppercase">
+            now
+          </span>
+          <div class="flex items-start gap-3">
+            <span class="bg-phosphor animate-pulse-dot mt-1.5 size-2 shrink-0 rounded-full"></span>
+            <p class="text-sm leading-relaxed">
+              Hardware security research and CTFs with
+              <a
+                href="https://bi0s.in"
+                target="_blank"
+                rel="noopener"
+                class="decoration-phosphor underline underline-offset-4">team bi0s</a
+              >. Mostly side channels, glitching and whatever's on the bench this week.
+            </p>
+          </div>
+        </div>
+
+        <dl class="grid grid-cols-2 gap-px border-border bg-border border" data-reveal>
+          {
+            stats.map(([n, l]) => (
+              <div class="bg-background p-5">
+                <dt class="text-muted-foreground text-xs tracking-[0.15em] uppercase">{l}</dt>
+                <dd class="mt-1 text-4xl font-extrabold tracking-tighter">{n}</dd>
+              </div>
+            ))
+          }
+        </dl>
       </div>
-    </Card>
-  </main>
+    </div>
+  </section>
+
+  <!-- 02 projects -->
+  <section class="mx-auto max-w-7xl px-5 pt-32 sm:px-8">
+    <p class="section-label mb-8" data-reveal>02 — selected work</p>
+    <div class="mb-12 flex flex-wrap items-end justify-between gap-6">
+      <h2
+        class="text-[clamp(2.2rem,5vw,4rem)] leading-[0.95] font-extrabold tracking-[-0.05em]"
+        data-reveal
+      >
+        things i built<br /><span class="text-muted-foreground">(and broke).</span>
+      </h2>
+      <a
+        href="/projects"
+        class="hover:text-phosphor group text-sm transition-colors"
+        data-reveal
+      >
+        <span class="text-phosphor">$</span> ls -la ./projects
+        <span class="inline-block transition-transform group-hover:translate-x-1">→</span>
+      </a>
+    </div>
+    <div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+      {projects.slice(0, 6).map((p, i) => <ProjectTile project={p} index={i} />)}
+    </div>
+  </section>
+
+  <!-- 03 writeups -->
+  <section class="mx-auto max-w-7xl px-5 pt-32 sm:px-8">
+    <p class="section-label mb-8" data-reveal>03 — writeups</p>
+    <div class="mb-10 flex flex-wrap items-end justify-between gap-6">
+      <h2
+        class="text-[clamp(2.2rem,5vw,4rem)] leading-[0.95] font-extrabold tracking-[-0.05em]"
+        data-reveal
+      >
+        notes from<br /><span class="text-phosphor">the bench.</span>
+      </h2>
+      <a href="/blog" class="hover:text-phosphor group text-sm transition-colors" data-reveal>
+        <span class="text-phosphor">$</span> cat ./blog/*
+        <span class="inline-block transition-transform group-hover:translate-x-1">→</span>
+      </a>
+    </div>
+    <div class="border-border border-t">
+      {posts.slice(0, 5).map((p, i) => <PostRow post={p} index={i} />)}
+    </div>
+  </section>
+
+  <!-- 04 telemetry -->
+  <section class="mx-auto max-w-7xl px-5 pt-32 sm:px-8">
+    <p class="section-label mb-8" data-reveal>04 — telemetry</p>
+    <div class="grid gap-5 lg:grid-cols-[1fr_20rem]">
+      <div class="border-border overflow-hidden border p-5 sm:p-6" data-reveal>
+        <div class="mb-5 flex items-center justify-between text-xs">
+          <span class="text-muted-foreground tracking-[0.2em] uppercase">git log --graph</span>
+          <a
+            href="https://github.com/br34dcrumb"
+            target="_blank"
+            rel="noopener"
+            class="hover:text-phosphor transition-colors">@br34dcrumb ↗</a
+          >
+        </div>
+        <GithubCalendar username="br34dcrumb" client:visible />
+      </div>
+      <a
+        href="/travel"
+        data-reveal
+        style="--i:1"
+        class="bracket group border-border dotted-bg relative flex flex-col justify-between overflow-hidden border p-5 sm:p-6"
+      >
+        <span class="text-muted-foreground text-xs tracking-[0.2em] uppercase">traceroute</span>
+        <ul class="my-6 space-y-1 text-sm">
+          {
+            visitedCountries.map((c, i) => (
+              <li class="flex gap-3">
+                <span class="text-border tabular-nums">{String(i + 1).padStart(2, ' ')}</span>
+                <span class="group-hover:text-phosphor transition-colors" style={`transition-delay:${i * 60}ms`}>
+                  {c.toLowerCase()}
+                </span>
+              </li>
+            ))
+          }
+          <li class="text-muted-foreground flex gap-3"><span class="text-border">*</span> * * request timed out</li>
+        </ul>
+        <span class="text-sm">open travel log <span class="text-phosphor">→</span></span>
+      </a>
+    </div>
+  </section>
 </Layout>

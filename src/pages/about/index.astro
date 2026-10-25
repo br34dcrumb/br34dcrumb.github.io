@@ -1,27 +1,187 @@
 ---
-import AuthorCard from '@/components/AuthorCard.astro'
-import Breadcrumbs from '@/components/Breadcrumbs.astro'
+import AsciiPortrait from '@/components/fx/AsciiPortrait'
 import PageHead from '@/components/PageHead.astro'
+import PageTitle from '@/components/PageTitle.astro'
+import { STUDIES } from '@/consts'
 import Layout from '@/layouts/Layout.astro'
-import { getAllAuthors } from '@/lib/data-utils'
+import logo from '@/assets/logo.png'
+import { getImage } from 'astro:assets'
+import { getEntry } from 'astro:content'
 
-const authors = await getAllAuthors()
+const author = (await getEntry('authors', 'br34d'))!.data
+const portrait = await getImage({ src: logo, width: 640, format: 'png' })
+
+const seeAlso = [
+  ['github', author.github],
+  ['twitter', author.twitter],
+  ['linkedin', author.linkedin],
+  ['mail', author.mail && `mailto:${author.mail}`],
+].filter(([, href]) => href) as [string, string][]
+
+const OPTIONS = [
+  ['--reverse', 'Disassemble firmware and binaries until they confess.'],
+  ['--sca', 'Pull secrets out of power traces and EM leakage.'],
+  ['--glitch', 'Inject faults with voltage and clock glitches.'],
+  ['--verilog', 'Design RISC cores, then find the bugs in them.'],
+  ['--ctf', 'Play hardware and rev challenges with team bi0s.'],
+]
+
+const today = new Date().toLocaleDateString('en-US', { month: 'long', year: 'numeric' })
 ---
 
-<Layout class="max-w-4xl">
+<Layout class="max-w-7xl">
   <PageHead slot="head" title="About" />
-  <Breadcrumbs items={[{ label: 'Author', icon: 'lucide:user' }]} />
-  {
-    authors.length > 0 ? (
-      <ul class="flex flex-col gap-4">
-        {authors.map((author) => (
-          <li>
-            <AuthorCard author={author} />
-          </li>
-        ))}
-      </ul>
-    ) : (
-      <p class="text-muted-foreground text-center">No authors found.</p>
-    )
-  }
+  <PageTitle label="man 1 br34d" title="About" />
+
+  <div class="grid gap-12 pt-6 lg:grid-cols-[minmax(0,26rem)_1fr] lg:gap-20">
+    <figure class="lg:sticky lg:top-24 lg:self-start" data-reveal>
+      <div class="border-border bracket relative border p-3">
+        <AsciiPortrait client:visible src={portrait.src} alt="br34d's astronaut avatar rendered as ASCII" />
+      </div>
+      <figcaption class="text-muted-foreground mt-3 flex justify-between text-xs">
+        <span>fig. 1 — the author, probably</span>
+        <span class="hidden sm:inline">hover to decrypt</span>
+      </figcaption>
+    </figure>
+
+    <article class="man text-sm leading-relaxed sm:text-base">
+      <div class="text-muted-foreground mb-10 flex justify-between text-xs" data-reveal>
+        <span>BR34D(1)</span>
+        <span class="hidden sm:inline">User Commands</span>
+        <span>BR34D(1)</span>
+      </div>
+
+      <section data-reveal>
+        <h2>name</h2>
+        <p><b>br34d</b> — Anikait Panigrahi{author.pronouns && ` (${author.pronouns})`}, {author.bio?.toLowerCase()}</p>
+      </section>
+
+      <section data-reveal>
+        <h2>synopsis</h2>
+        <p>
+          <b>br34d</b> [<span class="text-phosphor">--reverse</span>] [<span class="text-phosphor">--glitch</span>] [<span
+            class="text-phosphor">--sca</span
+          >] <u>target</u>
+        </p>
+      </section>
+
+      <section data-reveal>
+        <h2>description</h2>
+        <p>
+          Cybersecurity enthusiast and systems tinkerer with a curious mind. I enjoy unpacking complex
+          ideas and often find myself tangled in chaos. These days that chaos is mostly hardware: firmware
+          dumps, side-channel traces, glitch rigs and CPUs written in Verilog.
+        </p>
+        <p>
+          I lead the hardware side of <a href="https://bi0s.in" target="_blank" rel="noopener">team bi0s</a>,
+          play CTFs, and write up what I learn on this site. Always up for a good challenge — and a hot cup
+          of <i>chai</i>.
+        </p>
+      </section>
+
+      <section data-reveal>
+        <h2>options</h2>
+        <dl class="grid gap-x-8 gap-y-3 sm:grid-cols-[9rem_1fr]">
+          {
+            OPTIONS.map(([flag, desc]) => (
+              <>
+                <dt class="text-phosphor">{flag}</dt>
+                <dd class="text-foreground/75 mb-2 sm:mb-0">{desc}</dd>
+              </>
+            ))
+          }
+        </dl>
+      </section>
+
+      <section data-reveal>
+        <h2>education</h2>
+        {
+          STUDIES.map((s) => (
+            <p>
+              <b>{s.title}</b>
+              <br />
+              <a href={s.link} target="_blank" rel="noopener">
+                {s.institution}
+              </a>
+              <span class="text-muted-foreground"> — {s.date}</span>
+            </p>
+          ))
+        }
+      </section>
+
+      <section data-reveal>
+        <h2>files</h2>
+        <p>
+          {
+            author.resume && (
+              <a href={author.resume} target="_blank" class="group inline-flex items-center gap-2">
+                ~/resume.pdf
+                <span class="transition-transform group-hover:translate-x-1">↗</span>
+              </a>
+            )
+          }
+        </p>
+      </section>
+
+      <section data-reveal>
+        <h2>see also</h2>
+        <p class="flex flex-wrap gap-x-2">
+          {
+            seeAlso.map(([name, href], i) => (
+              <span>
+                <a href={href} target="_blank" rel="noopener">{name}(1)</a>
+                {i < seeAlso.length - 1 && ','}
+              </span>
+            ))
+          }
+        </p>
+      </section>
+
+      <section data-reveal>
+        <h2>bugs</h2>
+        <p>Drinks too much chai. Has fried at least one board per project. Will not stop.</p>
+      </section>
+
+      <div class="text-muted-foreground border-border mt-12 flex justify-between border-t pt-4 text-xs">
+        <span>br34d {new Date().getFullYear()}</span>
+        <span>{today}</span>
+        <span>BR34D(1)</span>
+      </div>
+    </article>
+  </div>
 </Layout>
+
+<style>
+  .man section {
+    margin-bottom: 2.25rem;
+  }
+  .man h2 {
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    font-size: 0.8rem;
+    color: var(--muted-foreground);
+    margin-bottom: 0.75rem;
+  }
+  .man p {
+    color: color-mix(in oklab, var(--foreground) 82%, transparent);
+    margin-bottom: 0.9rem;
+  }
+  .man section > p,
+  .man section > dl {
+    padding-left: clamp(0rem, 3vw, 2.5rem);
+  }
+  .man b {
+    color: var(--foreground);
+  }
+  .man a {
+    color: var(--foreground);
+    text-decoration: underline;
+    text-decoration-color: var(--phosphor);
+    text-underline-offset: 4px;
+    transition: color 0.2s;
+  }
+  .man a:hover {
+    color: var(--phosphor);
+  }
+</style>

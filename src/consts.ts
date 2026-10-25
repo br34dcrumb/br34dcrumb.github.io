@@ -29,7 +29,6 @@ export const NAV_LINKS: SocialLink[] = [
     href: '/about',
     label: 'about',
   },
-
 ]
 
 // My links
@@ -67,13 +66,45 @@ export const ICON_MAP: IconMap = {
   RSS: 'lucide:rss',
 }
 
-// Travel Page
-export const visitedCountries = [
-    "India",
-    "Thailand",
-    "Singapore",
-    "United Arab Emirates",
-  ];
+// Travel Page. `name` must match the country name in src/lib/world.json to
+// light up on the globe; coordinates are the city shown on the stamp.
+export const PLACES = [
+  {
+    name: 'India',
+    iso: 'IN',
+    city: 'New Delhi',
+    lat: 28.6139,
+    lon: 77.209,
+    utc: 'UTC+05:30',
+    home: true,
+  },
+  {
+    name: 'United Arab Emirates',
+    iso: 'AE',
+    city: 'Abu Dhabi',
+    lat: 24.4539,
+    lon: 54.3773,
+    utc: 'UTC+04:00',
+  },
+  {
+    name: 'Thailand',
+    iso: 'TH',
+    city: 'Bangkok',
+    lat: 13.7563,
+    lon: 100.5018,
+    utc: 'UTC+07:00',
+  },
+  {
+    name: 'Singapore',
+    iso: 'SG',
+    city: 'Singapore',
+    lat: 1.3521,
+    lon: 103.8198,
+    utc: 'UTC+08:00',
+  },
+]
+
+export const visitedCountries = PLACES.map((p) => p.name)
 
 // Study Page
 export const STUDIES = [
@@ -82,7 +113,5 @@ export const STUDIES = [
     institution: 'Amrita University',
     link: 'https://www.amrita.edu/',
     date: '2022 - 2026',
-  }
-
+  },
 ]
-

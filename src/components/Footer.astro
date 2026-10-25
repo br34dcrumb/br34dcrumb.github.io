@@ -1,28 +1,93 @@
 ---
-import { Separator } from '@/components/ui/separator'
 import { SOCIAL_LINKS } from '@/consts'
-import Link from './Link.astro'
-import SocialIcons from './SocialIcons.astro'
+import { LOGO } from '@/lib/ascii'
+
+const year = new Date().getFullYear()
+const socials = SOCIAL_LINKS.filter((l) => l.label !== 'RSS')
 ---
 
-<footer class="py-4">
-  <div
-    class="mx-auto flex max-w-4xl flex-col items-center justify-center gap-y-2 px-4 sm:flex-row sm:justify-between"
-  >
-    <div class="flex flex-wrap items-center justify-center gap-x-2 text-center">
-      <span class="text-muted-foreground text-sm">
-        &copy; {new Date().getFullYear()} All rights reserved.
-      </span>
-      <Separator orientation="vertical" className="hidden h-4! sm:block" />
-      <p class="text-muted-foreground text-sm">
-        Made with 🤍 by <Link
-          href="https://github.com/br34dcrumb"
-          class="text-foreground"
-          external
-          underline>br34d</Link
-        >!
-      </p>
+<footer class="border-border relative mt-24 overflow-hidden border-t">
+  <div class="mx-auto max-w-7xl px-5 pt-16 pb-8 sm:px-8">
+    <div class="grid gap-12 md:grid-cols-[1.4fr_1fr]">
+      <div>
+        <p class="section-label mb-6">// eof</p>
+        <a
+          href="mailto:br34dcrumb@proton.me"
+          class="group block text-[clamp(2rem,6vw,4.5rem)] leading-[0.95] font-extrabold tracking-[-0.05em]"
+        >
+          got a glitch<br />to share?
+          <span
+            class="text-phosphor inline-block transition-transform duration-300 group-hover:translate-x-3 group-hover:-translate-y-1"
+            >↗</span
+          >
+        </a>
+        <p class="text-muted-foreground mt-4 text-sm">
+          br34dcrumb@proton.me — I read everything, eventually.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-2 gap-8 text-sm">
+        <div>
+          <p class="text-muted-foreground mb-3 text-xs tracking-[0.2em] uppercase">
+            elsewhere
+          </p>
+          <ul class="space-y-2">
+            {
+              socials.map((l) => (
+                <li>
+                  <a
+                    href={l.href}
+                    target="_blank"
+                    rel="noopener"
+                    class="hover:text-phosphor group inline-flex items-center gap-2 transition-colors"
+                  >
+                    <span class="text-border group-hover:text-phosphor">→</span>
+                    {l.label.toLowerCase()}
+                  </a>
+                </li>
+              ))
+            }
+          </ul>
+        </div>
+        <div>
+          <p class="text-muted-foreground mb-3 text-xs tracking-[0.2em] uppercase">
+            index
+          </p>
+          <ul class="space-y-2">
+            <li><a href="/blog" class="hover:text-phosphor transition-colors">writeups</a></li>
+            <li><a href="/projects" class="hover:text-phosphor transition-colors">projects</a></li>
+            <li><a href="/tags" class="hover:text-phosphor transition-colors">tags</a></li>
+            <li><a href="/travel" class="hover:text-phosphor transition-colors">travel log</a></li>
+            <li><a href="/rss.xml" class="hover:text-phosphor transition-colors">rss</a></li>
+          </ul>
+        </div>
+      </div>
     </div>
-    <SocialIcons links={SOCIAL_LINKS} />
+
+    <pre
+      aria-hidden="true"
+      class="footer-logo text-border hover:text-phosphor mt-16 overflow-hidden text-[clamp(5px,2.35vw,30px)] leading-[1] transition-colors duration-500 select-none">{LOGO.join('\n')}</pre>
+
+    <div
+      class="text-muted-foreground border-border mt-8 flex flex-col gap-2 border-t pt-6 text-xs sm:flex-row sm:items-center sm:justify-between"
+    >
+      <span>&copy; {year} anikait panigrahi. all bits reserved.</span>
+      <span>built with astro, framer-motion &amp; excessive chai.</span>
+      <button
+        type="button"
+        id="to-top"
+        class="hover:text-phosphor text-left transition-colors sm:text-right"
+      >
+        cd .. ↑
+      </button>
+    </div>
   </div>
 </footer>
+
+<script>
+  document.addEventListener('astro:page-load', () => {
+    document
+      .getElementById('to-top')
+      ?.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }))
+  })
+</script>

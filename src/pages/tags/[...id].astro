@@ -1,7 +1,7 @@
 ---
-import BlogCard from '@/components/BlogCard.astro'
-import Breadcrumbs from '@/components/Breadcrumbs.astro'
 import PageHead from '@/components/PageHead.astro'
+import PageTitle from '@/components/PageTitle.astro'
+import PostRow from '@/components/PostRow.astro'
 import Layout from '@/layouts/Layout.astro'
 import { getAllTags, getPostsByTag } from '@/lib/data-utils'
 
@@ -26,27 +26,17 @@ export async function getStaticPaths() {
 const { tag, posts } = Astro.props
 ---
 
-<Layout class="max-w-3xl">
+<Layout class="max-w-7xl">
   <PageHead
     slot="head"
     title={`Posts tagged with "${tag}"`}
     description={`A collection of posts tagged with ${tag}.`}
     noindex
   />
-  <Breadcrumbs
-    items={[
-      { href: '/tags', label: 'Tags', icon: 'lucide:tags' },
-      { label: tag, icon: 'lucide:tag' },
-    ]}
-  />
-
-  <ul class="flex flex-col gap-y-4">
-    {
-      posts.map((post) => (
-        <li>
-          <BlogCard entry={post} />
-        </li>
-      ))
-    }
-  </ul>
+  <PageTitle label={`grep -r "#${tag}"`} title={`#${tag}`} count={posts.length}>
+    <a href="/tags" class="hover:text-phosphor text-muted-foreground text-sm transition-colors">← all tags</a>
+  </PageTitle>
+  <div class="border-border border-t">
+    {posts.map((post, i) => <PostRow post={post} index={i} />)}
+  </div>
 </Layout>

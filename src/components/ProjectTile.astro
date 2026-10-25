@@ -1,0 +1,62 @@
+---
+import { Image } from 'astro:assets'
+import type { CollectionEntry } from 'astro:content'
+
+interface Props {
+  project: CollectionEntry<'projects'>
+  index: number
+}
+
+const { project, index } = Astro.props
+const { name, description, tags, image, link, startDate, endDate } = project.data
+const fmt = (d: Date) =>
+  d.toLocaleDateString('en-US', { month: 'short', year: 'numeric' }).toLowerCase()
+const [title, subtitle] = name.split(/:\s(.+)/)
+---
+
+<a
+  href={link}
+  target="_blank"
+  rel="noopener"
+  data-reveal
+  style={`--i:${index % 3}`}
+  class="bracket group border-border bg-background hover:border-foreground/30 relative flex flex-col border transition-colors duration-300"
+>
+  <div class="border-border relative aspect-[16/9] overflow-hidden border-b">
+    <Image
+      src={image}
+      alt=""
+      width={720}
+      height={405}
+      class="h-full w-full object-cover brightness-[0.8] transition-[filter,scale] duration-700 group-hover:scale-105 group-hover:brightness-110"
+    />
+    <span
+      class="bg-background text-muted-foreground absolute top-0 left-0 px-2 py-1 text-[11px] tabular-nums"
+    >
+      [{String(index + 1).padStart(2, '0')}]
+    </span>
+    <span
+      class="bg-phosphor text-primary-foreground absolute right-0 bottom-0 translate-y-full px-2 py-1 text-xs font-semibold transition-transform duration-300 group-hover:translate-y-0"
+    >
+      open ↗
+    </span>
+  </div>
+
+  <div class="flex flex-1 flex-col gap-3 p-5">
+    {
+      startDate && (
+        <p class="text-muted-foreground text-[11px] tracking-wider uppercase">
+          {fmt(startDate)} → {endDate ? fmt(endDate) : 'now'}
+        </p>
+      )
+    }
+    <h3 class="text-lg leading-tight font-bold tracking-tight">
+      <span class="group-hover:text-phosphor transition-colors">{title}</span>
+      {subtitle && <span class="text-muted-foreground block text-sm font-normal">{subtitle}</span>}
+    </h3>
+    <p class="text-foreground/70 line-clamp-3 text-sm leading-relaxed">{description}</p>
+    <ul class="text-muted-foreground mt-auto flex flex-wrap gap-x-3 gap-y-1 pt-2 text-xs">
+      {tags.map((t) => <li><span class="text-border">#</span>{t.toLowerCase()}</li>)}
+    </ul>
+  </div>
+</a>

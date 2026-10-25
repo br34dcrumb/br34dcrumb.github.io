@@ -2,6 +2,9 @@
 import '@/styles/global.css'
 import '@/styles/typography.css'
 
+import BootLoader from '@/components/fx/BootLoader'
+import Cursor from '@/components/fx/Cursor'
+import EasterEggs from '@/components/fx/EasterEggs'
 import Footer from '@/components/Footer.astro'
 import Head from '@/components/Head.astro'
 import Header from '@/components/Header.astro'
@@ -10,32 +13,95 @@ import { cn } from '@/lib/utils'
 
 interface Props {
   class?: string
+  /** Skip the centered container so the page can go edge to edge. */
+  fullBleed?: boolean
 }
 
-const { class: className } = Astro.props
+const { class: className, fullBleed = false } = Astro.props
 ---
 
 <!doctype html>
 <html class="bg-background text-foreground" lang={SITE.locale}>
   <Head>
+    <script is:inline>
+      document.documentElement.classList.add('js')
+      try {
+        if (sessionStorage.getItem('br34d:booted')) {
+          document.documentElement.classList.add('booted')
+          window.__br34dBooted = true
+        }
+      } catch (e) {}
+      // View transitions replace <html> attributes; put our runtime classes back.
+      document.addEventListener('astro:after-swap', () => {
+        const c = document.documentElement.classList
+        c.add('js')
+        if (window.__br34dBooted) c.add('booted')
+        if (window.__br34dCursor) c.add('custom-cursor')
+      })
+    </script>
+    <noscript><style>.boot-root { display: none }</style></noscript>
     <slot name="head" />
   </Head>
   <body>
-    <slot name="loader" />
-    <div class="flex h-fit min-h-screen flex-col gap-y-6 font-mono">
-      <div
-        class="bg-background/50 sticky top-0 z-50 divide-y backdrop-blur-sm xl:divide-none"
-      >
-        <Header />
-        <slot name="subposts-navigation" />
-        <slot name="table-of-contents" />
-      </div>
-      <main class="grow">
-        <div class={cn('mx-auto flex grow flex-col gap-y-6 px-4', className)}>
-          <slot />
-        </div>
+    <div class="boot-root" transition:persist="boot">
+      <BootLoader client:load />
+    </div>
+    <Cursor client:load transition:persist="cursor" />
+    <EasterEggs client:idle transition:persist="eggs" />
+    <div class="crt-overlay" aria-hidden="true"></div>
+    <div class="grain" aria-hidden="true"></div>
+
+    <div class="flex min-h-screen flex-col font-mono">
+      <Header />
+      <main class="grow pt-16">
+        {
+          (Astro.slots.has('subposts-navigation') ||
+            Astro.slots.has('table-of-contents')) && (
+            <div class="bg-background/80 border-border sticky top-16 z-40 divide-y border-b backdrop-blur-md xl:hidden">
+              <slot name="subposts-navigation" />
+              <slot name="table-of-contents" />
+            </div>
+          )
+        }
+        {
+          fullBleed ? (
+            <slot />
+          ) : (
+            <div class={cn('mx-auto flex grow flex-col gap-y-8 px-5 pt-10 sm:px-8', className)}>
+              <slot />
+            </div>
+          )
+        }
       </main>
       <Footer />
     </div>
   </body>
+  <script>
+    import { scrambleText } from '@/lib/ascii'
+
+    // [data-reveal] fades/slides in once on scroll; [data-scramble] decodes its text.
+    let io: IntersectionObserver | undefined
+    document.addEventListener('astro:page-load', () => {
+      io?.disconnect()
+      io = new IntersectionObserver(
+        (entries) => {
+          for (const e of entries) {
+            if (!e.isIntersecting) continue
+            const el = e.target as HTMLElement
+            el.classList.add('is-in')
+            if (el.dataset.scramble !== undefined) {
+              scrambleText(el, el.dataset.scramble || el.textContent || '', {
+                duration: 700,
+              })
+            }
+            io!.unobserve(el)
+          }
+        },
+        { rootMargin: '0px 0px -10% 0px' },
+      )
+      document
+        .querySelectorAll('[data-reveal], [data-scramble]')
+        .forEach((el) => io!.observe(el))
+    })
+  </script>
 </html>

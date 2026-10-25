@@ -1,44 +1,94 @@
 ---
-// Remove Pagination imports
-import BlogCard from '@/components/BlogCard.astro'
-import Breadcrumbs from '@/components/Breadcrumbs.astro'
 import PageHead from '@/components/PageHead.astro'
+import PageTitle from '@/components/PageTitle.astro'
+import PostRow from '@/components/PostRow.astro'
 import Layout from '@/layouts/Layout.astro'
-import { getAllPosts, groupPostsByYear } from '@/lib/data-utils'
+import { getAllPosts, getSortedTags, groupPostsByYear } from '@/lib/data-utils'
 
-// Fetch ALL posts at build time (no paginate!)
 const allPosts = await getAllPosts()
 const postsByYear = groupPostsByYear(allPosts)
 const years = Object.keys(postsByYear).sort((a, b) => parseInt(b) - parseInt(a))
+const tags = await getSortedTags()
 ---
 
-<Layout class="max-w-4xl">
-  <PageHead slot="head" title="Blog" />
-  <Breadcrumbs
-    items={[{ label: 'Blog', href: '/blog', icon: 'lucide:library-big' }]}
-  />
+<Layout class="max-w-7xl">
+  <PageHead slot="head" title="Blog" description="CTF writeups and hardware hacking notes." />
+  <PageTitle
+    label="/var/log/writeups"
+    title="Writeups"
+    description="CTF writeups, hardware teardowns and notes from the bench. Mostly rev, side channels and things that weren't supposed to work."
+    count={allPosts.length}
+  >
+    <div class="flex flex-wrap gap-2 text-xs" id="tag-filter" data-reveal style="--i:2">
+      <button type="button" data-tag="" class="tag-btn is-active">*all</button>
+      {
+        tags.map(({ tag, count }) => (
+          <button type="button" data-tag={tag} class="tag-btn">
+            #{tag} <span class="opacity-50">{count}</span>
+          </button>
+        ))
+      }
+    </div>
+  </PageTitle>
 
-  <div class="flex min-h-[calc(100vh-18rem)] flex-col gap-y-8">
+  <div class="flex flex-col gap-16 pt-6">
     {
       years.map((year) => (
-        <section class="flex flex-col gap-y-4">
-          <hr />
-          <h3
-            class="font-['Atkinson'] pointer-events-none absolute z-10 hidden -translate-x-30 rotate-270 py-12 text-[4rem] leading-none text-transparent select-none sm:block"
-            style="-webkit-text-stroke: 1px var(--muted-foreground);"
+        <section class="year-group grid gap-4 md:grid-cols-[10rem_1fr]">
+          <h2
+            class="text-border text-6xl font-extrabold tracking-tighter md:sticky md:top-24 md:self-start md:text-7xl"
+            data-reveal
           >
             {year}
-          </h3>
-          <div class="font-medium sm:hidden">{year}</div>
-          <ul class="flex flex-col gap-4">
-            {postsByYear[year].map((post) => (
-              <li>
-                <BlogCard entry={post} />
-              </li>
+          </h2>
+          <div class="border-border border-t">
+            {postsByYear[year].map((post, i) => (
+              <PostRow post={post} index={i} />
             ))}
-          </ul>
+          </div>
         </section>
       ))
     }
   </div>
 </Layout>
+
+<style>
+  .tag-btn {
+    border: 1px solid var(--border);
+    padding: 0.35rem 0.7rem;
+    color: var(--muted-foreground);
+    transition:
+      color 0.2s,
+      border-color 0.2s,
+      background 0.2s;
+  }
+  .tag-btn:hover {
+    color: var(--foreground);
+    border-color: var(--foreground);
+  }
+  .tag-btn.is-active {
+    background: var(--phosphor);
+    border-color: var(--phosphor);
+    color: var(--primary-foreground);
+  }
+</style>
+
+<script>
+  document.addEventListener('astro:page-load', () => {
+    const filter = document.getElementById('tag-filter')
+    if (!filter) return
+    filter.addEventListener('click', (e) => {
+      const btn = (e.target as HTMLElement).closest<HTMLButtonElement>('.tag-btn')
+      if (!btn) return
+      const tag = btn.dataset.tag ?? ''
+      filter.querySelectorAll('.tag-btn').forEach((b) => b.classList.toggle('is-active', b === btn))
+      document.querySelectorAll<HTMLElement>('.post-row').forEach((row) => {
+        const tags = (row.dataset.tags ?? '').split(',')
+        row.hidden = !!tag && !tags.includes(tag)
+      })
+      document.querySelectorAll<HTMLElement>('.year-group').forEach((g) => {
+        g.hidden = !g.querySelector('.post-row:not([hidden])')
+      })
+    })
+  })
+</script>

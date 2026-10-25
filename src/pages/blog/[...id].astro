@@ -1,5 +1,4 @@
 ---
-import Breadcrumbs from '@/components/Breadcrumbs.astro'
 import Link from '@/components/Link.astro'
 import PostHead from '@/components/PostHead.astro'
 import PostNavigation from '@/components/PostNavigation.astro'
@@ -7,8 +6,6 @@ import SubpostsHeader from '@/components/SubpostsHeader.astro'
 import SubpostsSidebar from '@/components/SubpostsSidebar.astro'
 import TOCHeader from '@/components/TOCHeader.astro'
 import TOCSidebar from '@/components/TOCSidebar.astro'
-import Badge from '@/components/Badge.astro'
-import { Button } from '@/components/ui/button'
 import Layout from '@/layouts/Layout.astro'
 import {
   getAdjacentPosts,
@@ -80,33 +77,21 @@ const tocSections = await getTOCSections(currentPostId)
   <section
     class="grid grid-cols-[minmax(0px,1fr)_min(calc(var(--breakpoint-md)-2rem),100%)_minmax(0px,1fr)] gap-y-6"
   >
-    <div class="col-start-2">
-      <Breadcrumbs
-        items={[
-          { href: '/blog', label: 'Blog', icon: 'lucide:library-big' },
-          ...(isCurrentSubpost && parentPost
-            ? [
-                {
-                  href: `/blog/${parentPost.id}`,
-                  label: parentPost.data.title,
-                  icon: 'lucide:book-open',
-                },
-                {
-                  href: `/blog/${currentPostId}`,
-                  label: post.data.title,
-                  icon: 'lucide:file-text',
-                },
-              ]
-            : [
-                {
-                  href: `/blog/${currentPostId}`,
-                  label: post.data.title,
-                  icon: 'lucide:book-open-text',
-                },
-              ]),
-        ]}
-      />
-    </div>
+    <nav class="text-muted-foreground col-start-2 truncate text-xs" aria-label="Breadcrumb">
+      <span class="text-phosphor">$</span> cd
+      <a href="/" class="hover:text-phosphor transition-colors">~</a>/<a
+        href="/blog"
+        class="hover:text-phosphor transition-colors">blog</a
+      >{
+        isCurrentSubpost && parentPost && (
+          <>
+            /<a href={`/blog/${parentPost.id}`} class="hover:text-phosphor transition-colors">
+              {parentPost.id}
+            </a>
+          </>
+        )
+      }/<span class="text-foreground">{currentPostId.split('/').pop()}</span>
+    </nav>
 
     {
       post.data.image && (
@@ -115,7 +100,7 @@ const tocSections = await getTOCSections(currentPostId)
           alt={post.data.title}
           width={1200}
           height={630}
-          class="col-span-full mx-auto w-full max-w-5xl object-cover"
+          class="border-border col-span-full mx-auto w-full max-w-5xl border object-cover"
         />
       )
     }
@@ -123,7 +108,7 @@ const tocSections = await getTOCSections(currentPostId)
     <section class="col-start-2 flex flex-col gap-y-6 text-center">
       <div class="flex flex-col">
         <h1
-          class="mb-2 scroll-mt-31 text-3xl leading-tight font-medium sm:text-4xl"
+          class="mb-4 scroll-mt-31 text-4xl leading-[0.95] font-extrabold tracking-[-0.04em] sm:text-6xl"
           id="post-title"
         >
           {post.data.title}
@@ -198,8 +183,11 @@ const tocSections = await getTOCSections(currentPostId)
             post.data.tags &&
               post.data.tags.length > 0 &&
               post.data.tags.map((tag) => (
-                <Link href={`/tags/${tag}`}>
-                  <Badge text={tag} />
+                <Link
+                  href={`/tags/${tag}`}
+                  class="border-border text-muted-foreground hover:border-phosphor hover:text-phosphor border px-2.5 py-1 text-xs"
+                >
+                  #{tag}
                 </Link>
               ))
           }
@@ -241,24 +229,38 @@ const tocSections = await getTOCSections(currentPostId)
     />
   </section>
 
-  <Button
-    variant="outline"
-    size="icon"
-    className="group fixed right-8 bottom-8 z-50 hidden"
+  <div
+    id="read-progress"
+    class="bg-phosphor fixed inset-x-0 top-16 z-50 h-0.5 origin-left scale-x-0"
+    aria-hidden="true"
+  >
+  </div>
+
+  <button
+    type="button"
+    class="group border-border bg-background hover:border-phosphor hover:text-phosphor fixed right-6 bottom-6 z-50 hidden border px-3 py-2 text-xs transition-colors"
     id="scroll-to-top"
     title="Scroll to top"
     aria-label="Scroll to top"
   >
-    <Icon
-      name="lucide:arrow-up"
-      class="mx-auto size-4 transition-all group-hover:-translate-y-0.5"
-    />
-  </Button>
+    <span class="inline-block transition-transform group-hover:-translate-y-0.5">↑</span> top
+  </button>
 
   <script>
     document.addEventListener('astro:page-load', () => {
       const scrollToTopButton = document.getElementById('scroll-to-top')
       const footer = document.querySelector('footer')
+
+      const progress = document.getElementById('read-progress')
+      if (progress) {
+        const update = () => {
+          const max = document.documentElement.scrollHeight - window.innerHeight
+          progress.style.transform = `scaleX(${max > 0 ? window.scrollY / max : 0})`
+        }
+        update()
+        window.addEventListener('scroll', update, { passive: true })
+        document.addEventListener('astro:before-swap', () => window.removeEventListener('scroll', update), { once: true })
+      }
 
       if (scrollToTopButton && footer) {
         scrollToTopButton.addEventListener('click', () => {

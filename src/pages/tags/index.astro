@@ -1,33 +1,30 @@
 ---
-import Breadcrumbs from '@/components/Breadcrumbs.astro'
-import Link from '@/components/Link.astro'
 import PageHead from '@/components/PageHead.astro'
-import { badgeVariants } from '@/components/ui/badge'
+import PageTitle from '@/components/PageTitle.astro'
 import Layout from '@/layouts/Layout.astro'
 import { getSortedTags } from '@/lib/data-utils'
-import { Icon } from 'astro-icon/components'
 
 const sortedTags = await getSortedTags()
+const max = Math.max(...sortedTags.map((t) => t.count), 1)
 ---
 
-<Layout class="max-w-3xl">
+<Layout class="max-w-7xl">
   <PageHead slot="head" title="Tags" />
-  <Breadcrumbs items={[{ label: 'Tags', icon: 'lucide:tags' }]} />
-
-  <div class="flex flex-col gap-4">
-    <div class="flex flex-wrap gap-2">
-      {
-        sortedTags.map(({ tag, count }) => (
-          <Link
-            href={`/tags/${tag}`}
-            class={badgeVariants({ variant: 'secondary' })}
-          >
-            <Icon name="lucide:hash" class="size-3" />
-            {tag}
-            <span class="text-muted-foreground ml-1.5">({count})</span>
-          </Link>
-        ))
-      }
-    </div>
+  <PageTitle label="ls /usr/share/tags" title="Tags" count={sortedTags.length} />
+  <div class="flex flex-wrap items-baseline gap-x-8 gap-y-4 pt-4">
+    {
+      sortedTags.map(({ tag, count }, i) => (
+        <a
+          href={`/tags/${tag}`}
+          data-reveal
+          style={`--i:${i % 6}; font-size: ${1.25 + (count / max) * 2.5}rem`}
+          class="group hover:text-phosphor font-extrabold tracking-tighter transition-colors"
+        >
+          <span class="text-border group-hover:text-phosphor">#</span>
+          {tag}
+          <sup class="text-muted-foreground ml-1 text-xs font-normal">{count}</sup>
+        </a>
+      ))
+    }
   </div>
 </Layout>

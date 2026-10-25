@@ -1,29 +1,38 @@
 ---
-import Breadcrumbs from '@/components/Breadcrumbs.astro'
-import Link from '@/components/Link.astro'
 import PageHead from '@/components/PageHead.astro'
-import { buttonVariants } from '@/components/ui/button'
 import Layout from '@/layouts/Layout.astro'
-import { cn } from '@/lib/utils'
+import { FOUR_O_FOUR } from '@/lib/ascii'
 ---
 
-<Layout class="max-w-3xl">
-  <PageHead slot="head" title="404" />
-  <Breadcrumbs items={[{ label: '???', icon: 'lucide:circle-help' }]} />
-
-  <section
-    class="flex flex-col items-center justify-center gap-y-4 text-center"
-  >
-    <div class="max-w-md">
-      <h1 class="mb-4 text-3xl font-medium">404: Page not found</h1>
-      <p class="prose">Oops! The page you're looking for doesn't exist.</p>
+<Layout class="max-w-5xl">
+  <PageHead slot="head" title="404" noindex />
+  <section class="flex min-h-[60vh] flex-col justify-center gap-8 py-10">
+    <pre
+      class="glitch is-glitching text-phosphor text-glow overflow-hidden text-[clamp(8px,3.4vw,34px)] leading-[1] select-none"
+      data-text={FOUR_O_FOUR.join('\n')}
+      aria-label="404">{FOUR_O_FOUR.join('\n')}</pre>
+    <div class="text-muted-foreground space-y-1 text-sm">
+      <p><span class="text-glitch-a">Segmentation fault</span> (core dumped)</p>
+      <p>
+        pc: 0x<span class="text-foreground">deadbeef</span> &nbsp;sp: 0x<span class="text-foreground"
+          >7ffc0ffee000</span
+        >
+      </p>
+      <p>
+        the page at <span class="text-foreground" id="bad-path">this address</span> was glitched out of
+        existence.
+      </p>
     </div>
-    <Link
-      href="/"
-      class={cn(buttonVariants({ variant: 'outline' }), 'flex gap-x-1.5 group')}
-    >
-      <span class="transition-transform group-hover:-translate-x-1">&larr;</span
-      > Go to home page
-    </Link>
+    <div class="flex flex-wrap gap-3 text-sm">
+      <a href="/" class="bg-phosphor text-primary-foreground px-5 py-3 font-semibold">← cd ~</a>
+      <a href="/blog" class="bracket border-border border px-5 py-3">cat ./blog/*</a>
+    </div>
   </section>
 </Layout>
+
+<script>
+  document.addEventListener('astro:page-load', () => {
+    const el = document.getElementById('bad-path')
+    if (el) el.textContent = location.pathname
+  })
+</script>
