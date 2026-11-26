@@ -1,1 +1,5 @@
+# Store and check out text files with LF everywhere, whatever the OS or
+# core.autocrlf setting. Binary files are detected and left alone.
+* text=auto eol=lf
+
 *.mdx linguist-vendored
