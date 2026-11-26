@@ -164,7 +164,7 @@ export default function Terminal({ posts, projects }: Props) {
         print(
           <>
             anikait panigrahi <span className="text-muted-foreground">(br34d)</span>{' '}
-            — hardware lead @ team bi0s. ECE @ Amrita University.
+            — associate MDR analyst @ Unit 42, Palo Alto Networks. ECE @ Amrita University.
           </>,
         )
         break
@@ -173,14 +173,18 @@ export default function Terminal({ posts, projects }: Props) {
           <div className="flex flex-col gap-4 sm:flex-row sm:gap-6">
             <pre className="text-phosphor leading-tight">{BREAD.join('\n')}</pre>
             <div className="grid grid-cols-[6rem_1fr] gap-x-2">
-              <span className="text-phosphor col-span-2">br34d@bi0s</span>
-              <span className="text-border col-span-2">----------</span>
+              <span className="text-phosphor col-span-2">br34d@unit42</span>
+              <span className="text-border col-span-2">------------</span>
               <span className="text-phosphor">os</span>
               <span>Fedora / Windows 11</span>
               <span className="text-phosphor">host</span>
-              <span>Amrita University</span>
+              <span>Palo Alto Networks</span>
               <span className="text-phosphor">team</span>
-              <span>bi0s (hardware)</span>
+              <span>Unit 42</span>
+              <span className="text-phosphor">role</span>
+              <span>Associate MDR Analyst</span>
+              <span className="text-phosphor">edu</span>
+              <span>ECE @ Amrita University</span>
               <span className="text-phosphor">langs</span>
               <span>C, Python, Rust, Verilog</span>
               <span className="text-phosphor">fuel</span>

@@ -102,6 +102,14 @@ export const PLACES = [
     lon: 103.8198,
     utc: 'UTC+08:00',
   },
+  {
+    name: 'Japan',
+    iso: 'JP',
+    city: 'Tokyo',
+    lat: 35.6762,
+    lon: 139.6503,
+    utc: 'UTC+09:00',
+  },
 ]
 
 export const visitedCountries = PLACES.map((p) => p.name)
