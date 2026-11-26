@@ -881,7 +881,7 @@ save(
     kicker: '~/',
     title: 'Anikait Panigrahi',
     description: 'Hardware security, reverse engineering and CTF writeups.',
-    meta: 'hardware lead @ team bi0s',
+    meta: 'associate MDR analyst @ unit 42',
   }),
   join(ROOT, 'public/og/default.png'),
 )

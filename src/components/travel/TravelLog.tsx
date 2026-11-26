@@ -390,7 +390,7 @@ function Traceroute({
       className="border-border bg-background/70 border text-[12px] sm:text-[13px]"
     >
       <div className="border-border text-muted-foreground flex justify-between border-b px-4 py-2 text-xs">
-        <span>br34d@bi0s: ~ — traceroute</span>
+        <span>br34d@unit42: ~ — traceroute</span>
         <span className="text-phosphor">
           {shown > hops.length ? 'done' : 'running'}
         </span>

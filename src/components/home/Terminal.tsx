@@ -64,7 +64,7 @@ const FILES: Record<string, ReactNode> = {
       <span>reverse engineering, SCA, fault injection, RISC cores</span>
     </div>
   ),
-  'now.txt': <>Hardware security research and CTFs with team bi0s.</>,
+  'now.txt': <>Associate MDR Analyst at Unit 42, Palo Alto Networks. Hardware hacking on the side.</>,
 }
 
 const COMMANDS = [
@@ -105,7 +105,7 @@ export default function Terminal({ posts, projects }: Props) {
 
   const prompt = (cmd: string) => (
     <div>
-      <span className="text-phosphor">br34d@bi0s</span>
+      <span className="text-phosphor">br34d@unit42</span>
       <span className="text-muted-foreground">:~$ </span>
       {cmd}
     </div>
@@ -382,7 +382,7 @@ export default function Terminal({ posts, projects }: Props) {
           <span className="bg-phosphor/80 size-2.5 rounded-full" />
           <span className="bg-glitch-b/80 size-2.5 rounded-full" />
         </div>
-        <span>br34d@bi0s: ~ — zsh</span>
+        <span>br34d@unit42: ~ — zsh</span>
         <span className="tabular-nums">80×24</span>
       </div>
       <div
@@ -398,7 +398,7 @@ export default function Terminal({ posts, projects }: Props) {
           </div>
         ))}
         <label className="flex items-center">
-          <span className="text-phosphor shrink-0">br34d@bi0s</span>
+          <span className="text-phosphor shrink-0">br34d@unit42</span>
           <span className="text-muted-foreground shrink-0">:~$&nbsp;</span>
           <input
             ref={inputRef}

@@ -151,15 +151,16 @@ export default function Hero() {
           {...fadeUp(0.55, active)}
           className="text-muted-foreground mt-6 text-sm sm:text-base"
         >
-          aka <span className="text-foreground">br34d</span> — hardware lead @{' '}
+          aka <span className="text-foreground">br34d</span> — associate MDR analyst @ 
           <a
-            href="https://bi0s.in"
+            href="https://unit42.paloaltonetworks.com"
             target="_blank"
             rel="noopener"
             className="text-foreground decoration-phosphor underline underline-offset-4"
           >
-            team bi0s
+            Unit 42
           </a>
+          , Palo Alto Networks
         </motion.p>
 
         <motion.p
